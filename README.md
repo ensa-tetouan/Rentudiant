@@ -8,6 +8,7 @@ Where students are renting, and we are suffering.
 
 Create mysql DB with user:
 ```
+DB Name: rentudiant
 user: rentudiant
 pw:   toor
 ```
