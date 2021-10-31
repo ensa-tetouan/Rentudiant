@@ -7,7 +7,9 @@ Where students are renting, and we are suffering.
 ## Guide
 
 Create mysql DB with user:
+```
+DB Name: rentudiant
 user: rentudiant
 pw:   toor
-
+```
 security 101.
