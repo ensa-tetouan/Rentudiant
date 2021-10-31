@@ -1,4 +1,4 @@
 package uae.ensate.rentudiant.model;
 
-public class Gender {
+public enum Gender {
 }
