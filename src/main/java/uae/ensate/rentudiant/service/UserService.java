@@ -10,7 +10,9 @@ import uae.ensate.rentudiant.model.ConfirmationToken;
 import uae.ensate.rentudiant.model.User;
 import uae.ensate.rentudiant.repository.UserRepository;
 
+import javax.swing.text.html.Option;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -30,7 +32,8 @@ public class UserService implements UserDetailsService {
     }
 
     public String signUpUser(User user) {
-        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
+        if (userRepository.findByEmail(user.getEmail()).isPresent()
+                && confirmationTokenService.isConfirmed(user)) {
             throw new IllegalStateException("Email already taken");
         }
 
