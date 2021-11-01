@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import uae.ensate.rentudiant.dto.RegistrationDto;
 import uae.ensate.rentudiant.mail.EmailSender;
 import uae.ensate.rentudiant.model.ConfirmationToken;
-import uae.ensate.rentudiant.model.enums.Role;
 import uae.ensate.rentudiant.model.User;
 
 import javax.transaction.Transactional;
@@ -31,7 +30,8 @@ public class RegistrationService {
                         request.getLastName(),
                         request.getEmail(),
                         request.getPassword(),
-                        Role.Client
+                        request.getGender(),
+                        request.getRole()
                 )
         );
 

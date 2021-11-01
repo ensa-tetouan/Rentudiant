@@ -7,8 +7,8 @@ import org.hibernate.Hibernate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import uae.ensate.rentudiant.model.enums.Gender;
-import uae.ensate.rentudiant.model.enums.Role;
+import uae.ensate.rentudiant.enums.Gender;
+import uae.ensate.rentudiant.enums.Role;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -54,11 +54,12 @@ public class User implements UserDetails {
 
     public User(String firstName, String lastName,
                 String email, String password,
-                Role role) {
+                Gender gender, Role role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+        this.gender = gender;
         this.role = role;
     }
 

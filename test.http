@@ -5,6 +5,8 @@ Content-Type: application/json
   "firstName": "taha",
   "lastName": "metougui",
   "email" : "silverea2st123@gmail.com",
-  "password": "12345"
+  "password": "12345",
+  "gender": "Male",
+  "role": "Client"
 }
 

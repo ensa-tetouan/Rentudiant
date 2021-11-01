@@ -10,9 +10,7 @@ import uae.ensate.rentudiant.model.ConfirmationToken;
 import uae.ensate.rentudiant.model.User;
 import uae.ensate.rentudiant.repository.UserRepository;
 
-import javax.swing.text.html.Option;
 import java.time.LocalDateTime;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
