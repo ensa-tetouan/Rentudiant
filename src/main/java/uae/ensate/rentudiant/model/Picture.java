@@ -6,14 +6,20 @@ import lombok.Setter;
 import org.hibernate.Hibernate;
 import javax.persistence.*;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
-@Getters @Setters @NoArgsConstructor
 @Table(name = "pictures")
 public class Picture {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id", updatable = false, nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long houseId;
-    private String path; // can be base64 string 
+
+    @ManyToOne
+    @JoinColumn(name = "house_id", nullable = false)
+    private House house;
+
+    @Column(nullable = false)
+    private String path;
 }

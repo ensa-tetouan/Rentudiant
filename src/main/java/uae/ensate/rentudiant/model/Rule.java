@@ -6,15 +6,20 @@ import lombok.Setter;
 import org.hibernate.Hibernate;
 import javax.persistence.*;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
-@Getters @Setters @NoArgsConstructor
 @Table(name = "rules")
 public class Rule {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", updatable = false, nullable = false)
     private Long id;
-    private Long houseId;
+
+    @Column(nullable = false)
     private String ruleBody;
+
+    @Column(nullable = false)
     private double Penalty;
 }
