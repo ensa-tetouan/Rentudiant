@@ -1,0 +1,8 @@
+// public class Contact {
+//     private Long id;
+//     private String firstName;
+//     private String lastName;
+//     private String idCardNumber;
+//     private String Email;
+//     private String phone;
+// }
