@@ -3,17 +3,22 @@ package uae.ensate.rentudiant.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.Hibernate;
 import javax.persistence.*;
 
+@Setter
+@Getter
+@NoArgsConstructor
 @Entity
-@Getters @Setters @NoArgsConstructor
 @Table(name = "comments")
 public class Comment {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id", updatable = false, nullable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private Long houseId;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "house_id", nullable = false)
+    private House house;
+
     private String commentBody;
 }

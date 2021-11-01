@@ -1,11 +1,33 @@
 package uae.ensate.rentudiant.model;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.*;
+import java.util.Set;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@Entity
+@Table(name = "addresses")
 public class Address {
-    private String country;
-    private String region;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false)
     private String city;
+
+    @Column(nullable = false)
     private String street;
-    private String neighborhood;
-    private String alley;
-    private String number;
+
+    @Column(nullable = false)
+    private Long number;
+
+    @Column(nullable = false)
+    @OneToMany(mappedBy = "address")
+    private Set<House> houses;
 }
