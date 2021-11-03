@@ -16,15 +16,11 @@ public class House {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(
-            fetch = FetchType.LAZY,
-            cascade = CascadeType.PERSIST
-    )
-    @JoinColumn(
-            name = "address_id",
-            nullable = false
-    )
+    @ManyToOne
     private Address address;
+
+    @Column(nullable = false)
+    private String number;
 
     @Column(nullable = false)
     private int roomsC;
@@ -42,4 +38,18 @@ public class House {
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Rule> rules;
+
+    public House(Address address, int roomsC,
+                 int bathroomsC, int bedroomsC,
+                 String description, double surface,
+                 Set<Rule> rules) {
+        this.address = address;
+        this.roomsC = roomsC;
+        this.bathroomsC = bathroomsC;
+        this.bedroomsC = bedroomsC;
+        this.description = description;
+        this.surface = surface;
+        this.rules = rules;
+    }
+
 }

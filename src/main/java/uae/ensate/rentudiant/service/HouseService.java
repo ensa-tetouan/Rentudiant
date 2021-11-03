@@ -2,6 +2,8 @@ package uae.ensate.rentudiant.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import uae.ensate.rentudiant.dto.HouseDto;
+import uae.ensate.rentudiant.mapper.Mapper;
 import uae.ensate.rentudiant.model.Announcement;
 import uae.ensate.rentudiant.model.House;
 import uae.ensate.rentudiant.repository.HouseRepository;
@@ -16,6 +18,7 @@ public class HouseService {
 
     private final HouseRepository houseRepository;
     private final AnnouncementService announcementService;
+    private final AddressService addressService;
 
     public List<House> fetchAll () {
         return houseRepository.findAll();
@@ -31,11 +34,20 @@ public class HouseService {
                 .map(Pair::getP1).toList();
     }
 
-    public House add(House house) {
+    public House add(HouseDto houseDto) {
+        House house = Mapper.mapToHouse(
+                    houseDto,
+                    addressService.findById(houseDto.addressId())
+            );
         return houseRepository.save(house);
     }
 
     public void delete(Long id) {
         houseRepository.deleteById(id);
+    }
+
+    public House findById(Long id) {
+        return houseRepository.findById(id)
+                .orElseThrow(() -> new IllegalStateException("House with id=" + id + "not found"));
     }
 }

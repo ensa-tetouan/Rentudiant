@@ -22,4 +22,9 @@ public class Picture {
 
     @Column(nullable = false)
     private String path;
+
+    public Picture(House house, String path) {
+        this.house = house;
+        this.path = path;
+    }
 }

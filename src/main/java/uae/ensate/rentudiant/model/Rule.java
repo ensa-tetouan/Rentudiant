@@ -21,4 +21,9 @@ public class Rule {
 
     @Column(nullable = false)
     private double Penalty;
+
+    public Rule(String ruleBody, double penalty) {
+        this.ruleBody = ruleBody;
+        Penalty = penalty;
+    }
 }

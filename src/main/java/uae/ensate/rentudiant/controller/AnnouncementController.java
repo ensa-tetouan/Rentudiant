@@ -27,7 +27,7 @@ public class AnnouncementController {
         return announcementService.findAll();
     }
 
-    @GetMapping("delete")
+    @DeleteMapping("delete")
     public void deleteAnnouncement(@RequestParam("id") Long id) {
         announcementService.delete(id);
     }

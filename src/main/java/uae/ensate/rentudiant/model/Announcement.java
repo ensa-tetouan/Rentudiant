@@ -32,4 +32,10 @@ public class Announcement {
     private AnnouncementType type;
 
     private double Price;
+
+    public Announcement(House house, AnnouncementType type, double price) {
+        this.house = house;
+        this.type = type;
+        Price = price;
+    }
 }

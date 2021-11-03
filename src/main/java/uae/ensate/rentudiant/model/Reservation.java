@@ -36,4 +36,15 @@ public class Reservation {
 
     @Column(nullable = false)
     private LocalDateTime createdAt;
+
+    public Reservation(House house, Set<User> user,
+                       LocalDateTime startPeriod,
+                       LocalDateTime endPeriod,
+                       LocalDateTime createdAt) {
+        this.house = house;
+        this.user = user;
+        this.startPeriod = startPeriod;
+        this.endPeriod = endPeriod;
+        this.createdAt = createdAt;
+    }
 }

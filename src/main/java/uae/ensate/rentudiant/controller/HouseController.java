@@ -3,10 +3,8 @@ package uae.ensate.rentudiant.controller;
 import lombok.AllArgsConstructor;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.parameters.P;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import uae.ensate.rentudiant.dto.HouseDto;
 import uae.ensate.rentudiant.model.House;
 import uae.ensate.rentudiant.service.HouseService;
 
@@ -18,8 +16,8 @@ public class HouseController {
 
     private HouseService houseService;
 
-    @PostMapping("/add")
-    public String addHouse(@RequestParam House house) {
+    @PostMapping("add")
+    public String addHouse(@RequestParam HouseDto house) {
        houseService.add(house);
        return "";
     }
@@ -34,7 +32,7 @@ public class HouseController {
         return houseService.fetchAllByPriceRange(max, min);
     }
 
-    @GetMapping("delete")
+    @DeleteMapping("delete")
     public void delete(@RequestParam("id") Long id) {
         houseService.delete(id);
     }

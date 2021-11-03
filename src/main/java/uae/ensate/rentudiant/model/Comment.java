@@ -21,4 +21,9 @@ public class Comment {
     private House house;
 
     private String commentBody;
+
+    public Comment(House house, String commentBody) {
+        this.house = house;
+        this.commentBody = commentBody;
+    }
 }
