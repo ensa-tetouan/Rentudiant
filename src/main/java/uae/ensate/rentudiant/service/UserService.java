@@ -31,7 +31,7 @@ public class UserService implements UserDetailsService {
 
     public String signUpUser(User user) {
         if (userRepository.findByEmail(user.getEmail()).isPresent()
-                && confirmationTokenService.isConfirmed(user)) {
+            && confirmationTokenService.isConfirmed(user)) {
             throw new IllegalStateException("Email already taken");
         }
 

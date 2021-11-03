@@ -20,26 +20,26 @@ public class RegistrationService {
 
     public String register(RegistrationDto request) {
         boolean isValidEmail = emailService
-                .validate(request.getEmail());
+                .validate(request.email());
         if (!isValidEmail) {
             throw new IllegalStateException("email not valid");
         }
         String token =  userService.signUpUser(
                 new User (
-                        request.getFirstName(),
-                        request.getLastName(),
-                        request.getEmail(),
-                        request.getPassword(),
-                        request.getGender(),
-                        request.getRole()
+                        request.firstName(),
+                        request.lastName(),
+                        request.email(),
+                        request.password(),
+                        request.gender(),
+                        request.role()
                 )
         );
 
         String link = "http://localhost:8080/api/v1/register/confirm?token=" + token;
 
         emailSender.send(
-                request.getEmail(),
-                buildEmail(request.getFirstName(), link));
+                request.email(),
+                buildEmail(request.firstName(), link));
 
         return token;
     }
