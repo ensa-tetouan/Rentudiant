@@ -24,11 +24,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                    .antMatchers("/api/v*/register/**")
-                    .permitAll()
+                .antMatchers("/api/v*/announcements").permitAll()
+                .antMatchers("/api/v*/announcements/**").hasAnyRole("Admin", "Renter")
+                .antMatchers("/api/v*/register/**").permitAll()
+                .antMatchers("/api/v*/users/**").hasAuthority("Admin")
                 .anyRequest()
                 .authenticated().and()
-                .formLogin();
+                .formLogin().loginPage("/login")
+                .failureUrl("/login?error")
+                .usernameParameter("email")
+                .permitAll().and().logout()
+                .logoutUrl("/logout").deleteCookies("remember-me")
+                .logoutSuccessUrl("/").permitAll().and().rememberMe();
     }
 
     @Override

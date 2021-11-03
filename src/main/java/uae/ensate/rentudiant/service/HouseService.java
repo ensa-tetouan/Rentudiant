@@ -30,4 +30,12 @@ public class HouseService {
                                 && ann.getP2().getPrice() >= min)
                 .map(Pair::getP1).toList();
     }
+
+    public House add(House house) {
+        return houseRepository.save(house);
+    }
+
+    public void delete(Long id) {
+        houseRepository.deleteById(id);
+    }
 }
