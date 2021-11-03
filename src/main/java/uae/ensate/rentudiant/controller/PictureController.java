@@ -9,20 +9,25 @@ import uae.ensate.rentudiant.service.PictureService;
 
 import java.util.List;
 
-@RestController("/api/v1/house")
+@RestController("/api/v1/pictures")
 @AllArgsConstructor
 public class PictureController {
 
     private final PictureService pictureService;
 
-    @GetMapping("{id}/pictures")
-    private List<Picture> getPicturesForHouse(@PathVariable Long id) {
-       return pictureService.getPictures(id);
+    @GetMapping
+    private List<Picture> getPicturesForHouse(@RequestParam("house_id") Long house_id) {
+       return pictureService.getPictures(house_id);
     }
 
     @PostMapping("pictures/add")
     private String addPicture(@RequestBody PictureDto pictureDto) {
         pictureService.save(pictureDto);
         return "";
+    }
+
+    @DeleteMapping("pictures/delete")
+    private void deletePicture(@RequestParam("id") Long id) {
+        pictureService.delete(id);
     }
 }
