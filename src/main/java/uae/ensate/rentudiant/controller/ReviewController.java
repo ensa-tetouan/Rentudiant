@@ -38,6 +38,6 @@ public class ReviewController {
 
     @PutMapping("update")
     public void updateReview(@RequestParam("id") Long id, @RequestBody ReviewDto reviewDto) {
-
+        reviewService.update(id, reviewDto);
     }
 }

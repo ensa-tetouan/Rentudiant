@@ -3,13 +3,11 @@ package uae.ensate.rentudiant.mapper;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import uae.ensate.rentudiant.dto.AnnouncementDto;
 import uae.ensate.rentudiant.dto.HouseDto;
 import uae.ensate.rentudiant.dto.ReviewDto;
 import uae.ensate.rentudiant.dto.RuleDto;
-import uae.ensate.rentudiant.model.Address;
-import uae.ensate.rentudiant.model.House;
-import uae.ensate.rentudiant.model.Review;
-import uae.ensate.rentudiant.model.Rule;
+import uae.ensate.rentudiant.model.*;
 import uae.ensate.rentudiant.service.AddressService;
 
 @AllArgsConstructor
@@ -42,4 +40,11 @@ public class Mapper {
         );
     }
 
+    public static Announcement mapToAnnouncement(AnnouncementDto announcementDto, House house) {
+       return new Announcement(
+               house,
+               announcementDto.announcementType(),
+               announcementDto.price()
+       );
+    }
 }

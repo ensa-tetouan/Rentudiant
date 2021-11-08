@@ -19,4 +19,6 @@ public interface HouseRepository extends JpaRepository<House, Long> {
     void deleteById(Long id);
 
     List<House> findByRules(Set<Rule> rules);
+
+    void update(Long id, House house);
 }

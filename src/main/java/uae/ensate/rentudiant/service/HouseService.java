@@ -58,4 +58,13 @@ public class HouseService {
                         .map(Mapper::mapToRule)
                         .collect(Collectors.toSet()));
     }
+
+    public void update(Long id, HouseDto houseDto) {
+        houseRepository.update(
+                id,
+                Mapper.mapToHouse(
+                        houseDto,
+                        addressService
+                                .findById(houseDto.addressId())));
+    }
 }

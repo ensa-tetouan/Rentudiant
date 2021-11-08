@@ -46,4 +46,9 @@ public class HouseController {
     public List<House> getByRules(@RequestBody Set<RuleDto> rules) {
         return houseService.fetchAllByRules(rules);
     }
+
+    @PutMapping("update")
+    public void update(@RequestParam("id") Long id, @RequestBody HouseDto houseDto) {
+        houseService.update(id, houseDto);
+    }
 }
