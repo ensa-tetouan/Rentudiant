@@ -5,9 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import uae.ensate.rentudiant.dto.HouseDto;
 import uae.ensate.rentudiant.dto.ReviewDto;
+import uae.ensate.rentudiant.dto.RuleDto;
 import uae.ensate.rentudiant.model.Address;
 import uae.ensate.rentudiant.model.House;
 import uae.ensate.rentudiant.model.Review;
+import uae.ensate.rentudiant.model.Rule;
 import uae.ensate.rentudiant.service.AddressService;
 
 @AllArgsConstructor
@@ -26,8 +28,18 @@ public class Mapper {
             );
     }
 
-    // TODO: Slap the implementation in
-    public static Review mapToReview(ReviewDto reviewDto, House byId) {
-        return new Review();
+    public static Review mapToReview(ReviewDto reviewDto, House house) {
+        return new Review(
+                house,
+                reviewDto.rating()
+        );
     }
+
+    public static Rule mapToRule(RuleDto ruleDto) {
+        return new Rule(
+                ruleDto.ruleBody(),
+                ruleDto.penalty()
+        );
+    }
+
 }

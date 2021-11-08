@@ -3,14 +3,15 @@ package uae.ensate.rentudiant.service;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import uae.ensate.rentudiant.dto.HouseDto;
+import uae.ensate.rentudiant.dto.RuleDto;
 import uae.ensate.rentudiant.mapper.Mapper;
-import uae.ensate.rentudiant.model.Announcement;
 import uae.ensate.rentudiant.model.House;
 import uae.ensate.rentudiant.repository.HouseRepository;
 import uae.ensate.rentudiant.util.Pair;
 
 import java.util.List;
-import java.util.stream.Stream;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -49,5 +50,12 @@ public class HouseService {
     public House findById(Long id) {
         return houseRepository.findById(id)
                 .orElseThrow(() -> new IllegalStateException("House with id=" + id + "not found"));
+    }
+
+    public List<House> fetchAllByRules(Set<RuleDto> rules) {
+        return houseRepository
+                .findByRules(rules.stream()
+                        .map(Mapper::mapToRule)
+                        .collect(Collectors.toSet()));
     }
 }

@@ -5,16 +5,21 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 import uae.ensate.rentudiant.dto.HouseDto;
+import uae.ensate.rentudiant.dto.RuleDto;
 import uae.ensate.rentudiant.model.House;
 import uae.ensate.rentudiant.service.HouseService;
+import uae.ensate.rentudiant.service.RuleService;
 
 import java.util.List;
+import java.util.Set;
 
-@RestController("/api/v1/house")
+@RestController
+@RequestMapping("/api/v1/house")
 @AllArgsConstructor
 public class HouseController {
 
     private HouseService houseService;
+    private RuleService ruleService;
 
     @PostMapping("add")
     public String addHouse(@RequestParam HouseDto house) {
@@ -35,5 +40,10 @@ public class HouseController {
     @DeleteMapping("delete")
     public void delete(@RequestParam("id") Long id) {
         houseService.delete(id);
+    }
+
+    @GetMapping("rules")
+    public List<House> getByRules(@RequestBody Set<RuleDto> rules) {
+        return houseService.fetchAllByRules(rules);
     }
 }

@@ -28,5 +28,6 @@ public class PictureService {
 
     public void save(PictureDto pictureDto) {
         // TODO: Map pictureDto to picture then save
+
     }
 }
