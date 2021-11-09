@@ -3,15 +3,18 @@ package uae.ensate.rentudiant.service;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import uae.ensate.rentudiant.dto.AnnouncementDto;
+import uae.ensate.rentudiant.dto.RuleDto;
 import uae.ensate.rentudiant.mapper.Mapper;
 import uae.ensate.rentudiant.model.Announcement;
 import uae.ensate.rentudiant.model.House;
 import uae.ensate.rentudiant.repository.AnnouncementRepository;
+import uae.ensate.rentudiant.util.Pair;
 
 import java.util.List;
+import java.util.Set;
 
-@Service
 @AllArgsConstructor
+@Service
 public class AnnouncementService {
 
     private final AnnouncementRepository announcementRepository;
@@ -23,11 +26,9 @@ public class AnnouncementService {
     }
 
     public Announcement add(AnnouncementDto announcementDto) {
-        return announcementRepository.save(
-                Mapper.mapToAnnouncement(
-                        announcementDto,
-                        houseService
-                                .findById(announcementDto.idHouse())));
+        return announcementRepository.save(Mapper.mapToAnnouncement(
+                announcementDto,
+                houseService.findById(announcementDto.idHouse())));
     }
 
     public List<Announcement> findAll() {
@@ -55,5 +56,22 @@ public class AnnouncementService {
         return announcementRepository.findById(id)
                 .orElseThrow(() -> new IllegalStateException(
                         String.format("Announcement by %s not found", id)));
+    }
+
+    public List<Announcement> fetchAllByPriceRange(double max, double min) {
+        return findAll().stream()
+                .filter(ann ->
+                        ann.getPrice() <= max
+                                && ann.getPrice() >= min)
+                .toList();
+    }
+
+    public List<Announcement> fetchAllByRules(Set<RuleDto> rules) {
+        return findAll().stream()
+                .filter(x -> x.getHouse()
+                        .getRules()
+                        .containsAll(rules.stream()
+                                .map(Mapper::mapToRule).toList()))
+                .toList();
     }
 }

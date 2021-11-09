@@ -1,14 +1,8 @@
 package uae.ensate.rentudiant.mapper;
 
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import uae.ensate.rentudiant.dto.AnnouncementDto;
-import uae.ensate.rentudiant.dto.HouseDto;
-import uae.ensate.rentudiant.dto.ReviewDto;
-import uae.ensate.rentudiant.dto.RuleDto;
+import uae.ensate.rentudiant.dto.*;
 import uae.ensate.rentudiant.model.*;
-import uae.ensate.rentudiant.service.AddressService;
 
 @AllArgsConstructor
 public class Mapper {
@@ -46,5 +40,16 @@ public class Mapper {
                announcementDto.announcementType(),
                announcementDto.price()
        );
+    }
+
+    public static Reservation mapToReservation(ReservationDto reservationDto, House house) {
+        return new Reservation(
+                house,
+                reservationDto.owner(),
+                reservationDto.users(),
+                reservationDto.startPeriod(),
+                reservationDto.endPeriod(),
+                reservationDto.createdAt()
+        );
     }
 }

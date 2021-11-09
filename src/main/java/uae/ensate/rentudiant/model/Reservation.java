@@ -24,6 +24,10 @@ public class Reservation {
     )
     private House house;
 
+    @ManyToOne
+    @JoinColumn (name = "user_id")
+    private User owner;
+
     @OneToMany
     @JoinColumn (name = "user_id")
     private Set<User> user;
@@ -37,11 +41,13 @@ public class Reservation {
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
-    public Reservation(House house, Set<User> user,
+    public Reservation(House house, User owner,
+                       Set<User> user,
                        LocalDateTime startPeriod,
                        LocalDateTime endPeriod,
                        LocalDateTime createdAt) {
         this.house = house;
+        this.owner = owner;
         this.user = user;
         this.startPeriod = startPeriod;
         this.endPeriod = endPeriod;

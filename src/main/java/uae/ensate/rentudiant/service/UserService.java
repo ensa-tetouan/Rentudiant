@@ -56,4 +56,9 @@ public class UserService implements UserDetailsService {
     public int enableUser(String email) {
         return userRepository.enableUser(email);
     }
+
+    public User findById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new IllegalStateException("User not found"));
+    }
 }
