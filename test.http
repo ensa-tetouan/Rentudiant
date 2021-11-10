@@ -4,9 +4,93 @@ Content-Type: application/json
 {
   "firstName": "taha",
   "lastName": "metougui",
-  "email" : "silverea2st123@gmail.com",
-  "password": "12345",
+  "email" : "silverest212@gmail.com",
+  "password": "pwordlfkas",
   "gender": "Male",
-  "role": "Client"
+  "role": "Renter"
 }
 
+> {%
+    client.global.set("confirmation_token", response.body);
+%}
+
+###
+GET http://localhost:8080/api/v1/register/confirm?token={{confirmation_token}}
+
+### Authenticate obviously
+POST http://localhost:8080/api/v1/authenticate
+Content-Type: application/json
+
+{
+  "email" : "silverest212@gmail.com",
+  "password" : "pwordlfkas"
+}
+
+> {%
+    client.global.set("auth_token", response.body);
+%}
+
+### Get announcements
+GET http://localhost:8080/api/v1/announcement
+
+###
+POST http://localhost:8080/api/v1/address/add
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+  "city": "Paris",
+  "street": "rue de la paix",
+  "zip": "75000"
+}
+
+###
+POST http://localhost:8080/api/v1/house/add
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+  "number": 10,
+  "addressId": 1,
+  "roomsC": 2,
+  "bathroomsC": 1,
+  "bedroomsC": 2,
+  "surface": 100.0,
+  "description": "This is a nice house",
+  "rules": [
+    {
+      "ruleBody": "No smoking",
+      "penalty": 10.0
+    },
+    {
+      "ruleBody": "No pets",
+      "penalty": 10.0
+    }
+  ],
+  "pictures": [
+    {
+      "path": "some-path1"
+    },
+    {
+      "path": "some-path2"
+    }
+  ]
+}
+
+###
+POST http://localhost:8080/api/v1/announcement/add
+Content-Type: application/json
+
+{
+  "idHouse": 1,
+  "announcementType": "Renting",
+  "price": 100.0
+}
+
+###
+GET http://localhost:8080/api/v1/announcement
+Authorization: Bearer {{auth_token}}
+
+###
+DELETE http://localhost:8080/api/v1/announcement/delete?id=1
+Authorization: Bearer {{auth_token}}

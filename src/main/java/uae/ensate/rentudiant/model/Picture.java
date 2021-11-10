@@ -3,7 +3,7 @@ package uae.ensate.rentudiant.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.Hibernate;
+
 import javax.persistence.*;
 
 @Getter
@@ -16,10 +16,10 @@ public class Picture {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "house_id", nullable = false)
-    private House house;
-
     @Column(nullable = false)
     private String path;
+
+    public Picture(String path) {
+        this.path = path;
+    }
 }

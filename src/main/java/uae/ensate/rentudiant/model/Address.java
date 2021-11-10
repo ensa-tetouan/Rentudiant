@@ -13,21 +13,21 @@ import java.util.Set;
 @Entity
 @Table(name = "addresses")
 public class Address {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(nullable = false)
     private String city;
 
-    @Column(nullable = false)
     private String street;
 
-    @Column(nullable = false)
-    private Long number;
+    private String zip;
 
-    @Column(nullable = false)
-    @OneToMany(mappedBy = "address")
-    private Set<House> houses;
+    public Address(String city, String street, String zip) {
+        this.city = city;
+        this.street = street;
+        this.zip = zip;
+    }
+
 }

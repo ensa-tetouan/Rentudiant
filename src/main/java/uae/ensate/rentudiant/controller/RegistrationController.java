@@ -8,6 +8,7 @@ import uae.ensate.rentudiant.service.RegistrationService;
 @AllArgsConstructor
 @RestController
 @RequestMapping(path = "api/v1/register")
+@CrossOrigin
 public class RegistrationController {
 
     public final RegistrationService registrationService;

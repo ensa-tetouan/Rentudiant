@@ -31,7 +31,7 @@ public class UserService implements UserDetailsService {
 
     public String signUpUser(User user) {
         if (userRepository.findByEmail(user.getEmail()).isPresent()
-                && confirmationTokenService.isConfirmed(user)) {
+            && confirmationTokenService.isConfirmed(user)) {
             throw new IllegalStateException("Email already taken");
         }
 
@@ -53,7 +53,18 @@ public class UserService implements UserDetailsService {
         return cToken.getToken();
     }
 
+    public boolean loginUser(String username, String password) {
+        return userRepository.findByEmail(username)
+                .orElseThrow(() -> new IllegalStateException("User not found"))
+                .getPassword().equals(password);
+    }
+
     public int enableUser(String email) {
         return userRepository.enableUser(email);
+    }
+
+    public User findById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new IllegalStateException("User not found"));
     }
 }

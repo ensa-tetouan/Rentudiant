@@ -13,3 +13,5 @@ user: rentudiant
 pw:   toor
 ```
 security 101.
+
+check [this](./test.http) for examples.

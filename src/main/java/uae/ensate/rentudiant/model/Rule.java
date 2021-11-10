@@ -10,7 +10,6 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "rules")
 public class Rule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,4 +21,9 @@ public class Rule {
 
     @Column(nullable = false)
     private double Penalty;
+
+    public Rule(String ruleBody, double penalty) {
+        this.ruleBody = ruleBody;
+        Penalty = penalty;
+    }
 }

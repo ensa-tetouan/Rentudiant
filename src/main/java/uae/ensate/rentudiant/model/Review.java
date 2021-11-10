@@ -27,4 +27,9 @@ public class Review {
     @DecimalMin(value = "0.0")
     @DecimalMax(value = "10.0")
     private double rating;
+
+    public Review(House house, double rating) {
+        this.house = house;
+        this.rating = rating;
+    }
 }

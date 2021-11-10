@@ -33,5 +33,4 @@ build/
 .vscode/
 /.mvn/
 /lib/
-test.http
 .jpb/

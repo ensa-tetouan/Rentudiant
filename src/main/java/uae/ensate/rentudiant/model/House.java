@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -16,15 +17,11 @@ public class House {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(
-            fetch = FetchType.LAZY,
-            cascade = CascadeType.PERSIST
-    )
-    @JoinColumn(
-            name = "address_id",
-            nullable = false
-    )
+    @ManyToOne
     private Address address;
+
+    @Column(nullable = false)
+    private int number;
 
     @Column(nullable = false)
     private int roomsC;
@@ -42,4 +39,25 @@ public class House {
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Rule> rules;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name="picture_id")
+    private List<Picture> pictures;
+
+    public House(Address address, int number,
+                 int roomsC, int bathroomsC,
+                 int bedroomsC, String description,
+                 double surface, Set<Rule> rules,
+                 List<Picture> pictures) {
+        this.pictures = pictures;
+        this.number = number;
+        this.address = address;
+        this.roomsC = roomsC;
+        this.bathroomsC = bathroomsC;
+        this.bedroomsC = bedroomsC;
+        this.description = description;
+        this.surface = surface;
+        this.rules = rules;
+    }
+
 }
