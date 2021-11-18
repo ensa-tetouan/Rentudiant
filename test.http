@@ -7,7 +7,7 @@ Content-Type: application/json
   "email" : "silverest212@gmail.com",
   "password": "pwordlfkas",
   "gender": "Male",
-  "role": "Renter"
+  "role": "Admin"
 }
 
 > {%

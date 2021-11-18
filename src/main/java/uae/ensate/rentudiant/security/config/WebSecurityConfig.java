@@ -10,7 +10,6 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import uae.ensate.rentudiant.security.JwtRequestFilter;
 import uae.ensate.rentudiant.service.UserService;
@@ -27,7 +26,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     };
 
     private final UserService userService;
-
     private final JwtRequestFilter jwtRequestFilter;
 
     @Override
@@ -42,7 +40,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/api/v*/authenticate").permitAll()
                 .antMatchers("/api/v*/register/**").permitAll()
-                .antMatchers("/api/v*/announcement/**").permitAll()
+                .antMatchers("/api/v*/announcement/**").hasAnyAuthority("ADMIN", "RENTER")
                 .antMatchers("/api/v*/address/**").permitAll()
                 .antMatchers("/api/v*/pictures/**").permitAll()
                 .antMatchers("/api/v*/house/**").permitAll()
