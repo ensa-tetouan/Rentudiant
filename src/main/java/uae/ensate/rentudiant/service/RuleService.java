@@ -12,8 +12,15 @@ import uae.ensate.rentudiant.repository.RuleRepository;
 public class RuleService {
 
     private final RuleRepository ruleRepository;
+    private final DbUpdateService dbUpdateService;
 
     public Rule save(RuleDto ruleDto) {
+        dbUpdateService.dbUpdated();
         return ruleRepository.save(Mapper.mapToRule(ruleDto));
+    }
+
+    public void deleteRule(Long id) {
+        dbUpdateService.dbUpdated();
+        ruleRepository.deleteById(id);
     }
 }

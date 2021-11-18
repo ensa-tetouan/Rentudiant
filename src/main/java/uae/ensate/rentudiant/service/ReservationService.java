@@ -18,20 +18,23 @@ public class ReservationService {
     private final ReservationRepository reservationRepository;
     private final HouseService houseService;
     private final UserService userService;
+    private final DbUpdateService dbUpdateService;
 
-    public void addReservation(ReservationDto reservationDto) {
+    public Reservation addReservation(ReservationDto reservationDto) {
         Reservation reservation = Mapper.mapToReservation(
                 reservationDto,
                 houseService.findById(reservationDto.houseId()));
 
-        reservationRepository.save(reservation);
+        dbUpdateService.dbUpdated();
+        return reservationRepository.save(reservation);
     }
 
     public void deleteReservation(Long id) {
+        dbUpdateService.dbUpdated();
         reservationRepository.deleteById(id);
     }
 
-    public void update(Long id, ReservationDto reservationDto) {
+    public Reservation update(Long id, ReservationDto reservationDto) {
         Reservation reservation = findById(id);
         Reservation updatedReservation = Mapper.mapToReservation(
                 reservationDto,
@@ -42,7 +45,8 @@ public class ReservationService {
         reservation.setEndPeriod(updatedReservation.getEndPeriod());
         reservation.setStartPeriod(updatedReservation.getStartPeriod());
 
-        reservationRepository.save(reservation);
+        dbUpdateService.dbUpdated();
+        return reservationRepository.save(reservation);
     }
 
     public Reservation findById(Long id) {

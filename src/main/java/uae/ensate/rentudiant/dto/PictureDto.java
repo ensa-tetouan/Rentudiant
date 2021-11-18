@@ -1,3 +1,3 @@
 package uae.ensate.rentudiant.dto;
 
-public record PictureDto (String path) { }
+public record PictureDto (String data) { }

@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import uae.ensate.rentudiant.dto.PictureDto;
 import uae.ensate.rentudiant.mapper.Mapper;
-import uae.ensate.rentudiant.model.House;
 import uae.ensate.rentudiant.model.Picture;
 import uae.ensate.rentudiant.repository.PictureRepository;
 
@@ -16,6 +15,7 @@ import java.util.List;
 public class PictureService {
 
     private final PictureRepository pictureRepository;
+    private final DbUpdateService dbUpdateService;
 
     public void delete(Long id) {
         pictureRepository.deleteById(id);
@@ -23,6 +23,8 @@ public class PictureService {
 
     public Picture save(PictureDto pictureDto) {
         Picture picture = Mapper.mapToPicture(pictureDto);
+
+        dbUpdateService.dbUpdated();
         return pictureRepository.save(picture);
     }
 }

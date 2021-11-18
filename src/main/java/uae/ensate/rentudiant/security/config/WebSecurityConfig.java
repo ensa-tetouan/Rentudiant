@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -18,6 +19,12 @@ import uae.ensate.rentudiant.service.UserService;
 @AllArgsConstructor
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+    private static final String[] AUTH_WHITELIST = {
+            "/swagger-resources/**",
+            "/swagger-ui.html",
+            "/v2/api-docs",
+            "/webjars/**"
+    };
 
     private final UserService userService;
 
@@ -31,46 +38,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .csrf().disable()
+                .cors().and().csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/api/v*/authenticate").permitAll()
                 .antMatchers("/api/v*/register/**").permitAll()
                 .antMatchers("/api/v*/announcement/**").permitAll()
-                .antMatchers("/api/v*/house/**", "/api/v*/address/**").permitAll()
+                .antMatchers("/api/v*/address/**").permitAll()
+                .antMatchers("/api/v*/pictures/**").permitAll()
+                .antMatchers("/api/v*/house/**").permitAll()
+                .antMatchers("/swagger-ui/**").permitAll()
                 .anyRequest().authenticated()
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-                //.antMatchers("/api/v*/announcements").permitAll()
-                //.antMatchers("/api/v*/announcements/**").hasAnyRole("Admin", "Renter")
-                //.antMatchers("/api/v*/house/**").hasAnyRole("Admin", "Renter")
-                //.antMatchers("/api/v*/**").permitAll()
-                //.antMatchers("/api/v*/users/**").hasAuthority("Admin")
-                //.anyRequest()
-                //.anyRequest()
-                //.authenticated().and()
-                //.httpBasic();
-                //.authenticated().and()
-                //.formLogin().loginPage("/login")
-                //.failureUrl("/login?error")
-                //.usernameParameter("email")
-                //.permitAll().and().logout()
-                //.logoutUrl("/logout").deleteCookies("remember-me")
-                //.logoutSuccessUrl("/").permitAll().and().rememberMe();
     }
 
-    //@Override
-    //protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-    //    auth.authenticationProvider(daoAuthenticationProvider());
-    //}
-
-    //@Bean
-    //public DaoAuthenticationProvider daoAuthenticationProvider() {
-    //    DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-    //    provider.setPasswordEncoder(bcryptPasswordEncoder);
-    //    provider.setUserDetailsService(userService);
-    //    return provider;
-    //}
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers(AUTH_WHITELIST);
+    }
 
     @Bean
     @Override

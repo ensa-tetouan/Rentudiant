@@ -6,11 +6,14 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import uae.ensate.rentudiant.dto.RegistrationDto;
+import uae.ensate.rentudiant.mapper.Mapper;
 import uae.ensate.rentudiant.model.ConfirmationToken;
 import uae.ensate.rentudiant.model.User;
 import uae.ensate.rentudiant.repository.UserRepository;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -66,5 +69,23 @@ public class UserService implements UserDetailsService {
     public User findById(Long id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new IllegalStateException("User not found"));
+    }
+
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
+
+    public void deleteById(Long id) {
+        userRepository.deleteById(id);
+    }
+
+    public void update(Long id, RegistrationDto userDto) {
+        User modUser = Mapper.mapToUser(userDto);
+        User user = findById(id);
+
+        user.setLocked(!modUser.isAccountNonLocked());
+        user.setEnabled(modUser.isEnabled());
+
+        userRepository.save(user);
     }
 }

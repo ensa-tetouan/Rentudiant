@@ -21,6 +21,7 @@ public class HouseService {
     private final AddressService addressService;
     private final RuleService ruleService;
     private final PictureService pictureService;
+    private final DbUpdateService dbUpdateService;
 
     public List<House> fetchAll () {
         return houseRepository.findAll();
@@ -39,10 +40,13 @@ public class HouseService {
 
         House house = Mapper.mapToHouse(houseDto, rules, pictures,
                 addressService.findById(houseDto.addressId()));
+
+        dbUpdateService.dbUpdated();
         return houseRepository.save(house);
     }
 
     public void delete(Long id) {
+        dbUpdateService.dbUpdated();
         houseRepository.deleteById(id);
     }
 
@@ -74,6 +78,7 @@ public class HouseService {
         house.setRules(modHouse.getRules());
         house.setSurface(modHouse.getSurface());
 
+        dbUpdateService.dbUpdated();
         houseRepository.save(house);
     }
 

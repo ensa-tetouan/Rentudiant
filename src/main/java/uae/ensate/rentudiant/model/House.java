@@ -38,10 +38,11 @@ public class House {
     private double surface;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "house_id")
     private Set<Rule> rules;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name="picture_id")
+    @JoinColumn(name = "house_id")
     private List<Picture> pictures;
 
     public House(Address address, int number,

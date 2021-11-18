@@ -1,6 +1,7 @@
 package uae.ensate.rentudiant.controller;
 
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uae.ensate.rentudiant.dto.ReviewDto;
 import uae.ensate.rentudiant.model.Review;
@@ -17,19 +18,19 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     @GetMapping("house")
-    public List<Review> fetchReviewsByHouse(@RequestParam("house_id") Long id) {
-        return reviewService.fetchReviewsByHouse(id);
+    public ResponseEntity<List<Review>> fetchReviewsByHouse(@RequestParam("house_id") Long id) {
+        return ResponseEntity.ok(reviewService.fetchReviewsByHouse(id));
     }
 
     @GetMapping
-    public Review findReviewById(@RequestParam("id") Long id) {
-        return reviewService.findById(id);
+    public ResponseEntity<Review> findReviewById(@RequestParam("id") Long id) {
+        return ResponseEntity.ok(reviewService.findById(id));
     }
 
     @PostMapping
-    public String addReviewToHouse(@RequestBody ReviewDto reviewDto) {
-        reviewService.save(reviewDto);
-        return "";
+    public ResponseEntity<Long> addReviewToHouse(@RequestBody ReviewDto reviewDto) {
+        Review review = reviewService.save(reviewDto);
+        return ResponseEntity.ok(review.getId());
     }
 
     @DeleteMapping

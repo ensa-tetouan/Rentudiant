@@ -18,13 +18,10 @@ public class AnnouncementService {
 
     private final AnnouncementRepository announcementRepository;
     private final HouseService houseService;
-
-    public Announcement findByHouse(House house) {
-        return announcementRepository.findByHouse(house)
-                .orElseThrow(() -> new IllegalArgumentException("House not found"));
-    }
+    private final DbUpdateService dbUpdateService;
 
     public Announcement add(AnnouncementDto announcementDto) {
+        dbUpdateService.dbUpdated();
         return announcementRepository.save(Mapper.mapToAnnouncement(
                 announcementDto,
                 houseService.findById(announcementDto.idHouse())));
@@ -35,6 +32,7 @@ public class AnnouncementService {
     }
 
     public void delete(Long id) {
+        dbUpdateService.dbUpdated();
         announcementRepository.deleteById(id);
     }
 
@@ -48,6 +46,8 @@ public class AnnouncementService {
        announcement.setHouse(modAnnouncement.getHouse());
        announcement.setPrice(modAnnouncement.getPrice());
        announcement.setType(modAnnouncement.getType());
+
+       dbUpdateService.dbUpdated();
        announcementRepository.save(announcement);
     }
 

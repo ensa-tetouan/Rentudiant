@@ -18,6 +18,8 @@ public class Announcement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Boolean updated = false;
+
     @OneToOne
     @JoinColumn(
             name = "house_id",

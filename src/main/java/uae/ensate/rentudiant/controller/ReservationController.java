@@ -1,6 +1,7 @@
 package uae.ensate.rentudiant.controller;
 
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uae.ensate.rentudiant.dto.ReservationDto;
 import uae.ensate.rentudiant.model.Reservation;
@@ -17,8 +18,9 @@ public class ReservationController {
     public final ReservationService reservationService;
 
     @PostMapping("/add")
-    public void addReservation(@RequestBody ReservationDto reservation) {
-        reservationService.addReservation(reservation);
+    public ResponseEntity<Long> addReservation(@RequestBody ReservationDto reservation) {
+        Reservation r = reservationService.addReservation(reservation);
+        return ResponseEntity.ok(r.getId());
     }
 
     @DeleteMapping("/delete")
@@ -32,12 +34,12 @@ public class ReservationController {
     }
 
     @GetMapping("/renter")
-    public List<Reservation> getByRenter(@RequestParam("id") Long id) {
-        return reservationService.getByRenter(id);
+    public ResponseEntity<List<Reservation>> getByRenter(@RequestParam("id") Long id) {
+        return ResponseEntity.ok(reservationService.getByRenter(id));
     }
 
     @GetMapping("/rentee")
-    public List<Reservation> getByClient(@RequestParam("id") Long id) {
-        return reservationService.getByClient(id);
+    public ResponseEntity<List<Reservation>> getByClient(@RequestParam("id") Long id) {
+        return ResponseEntity.ok(reservationService.getByClient(id));
     }
 }
