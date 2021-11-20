@@ -20,24 +20,25 @@ public class DataLoader implements ApplicationRunner {
     private PasswordEncoder passwordEncoder;
 
     public void run(ApplicationArguments args) {
-        userRepository.saveAll(
-                List.of(
-                        new User("admin", "test",
-                                "admin@test.com",
-                                passwordEncoder.bCryptPasswordEncoder()
-                                        .encode("admin123"),
-                                Gender.Male, Role.ADMIN),
-                        new User("renter", "test",
-                                "renter@test.com",
-                                passwordEncoder.bCryptPasswordEncoder()
-                                        .encode("renter123"),
-                                Gender.Male, Role.RENTER),
-                        new User("client", "test",
-                                "client@test.com",
-                                passwordEncoder.bCryptPasswordEncoder()
-                                        .encode("client123"),
-                                Gender.Male, Role.CLIENT)
-                        ));
+        List<User> users = List.of(
+                new User("admin", "test",
+                        "admin@test.com",
+                        passwordEncoder.bCryptPasswordEncoder()
+                                .encode("admin123"),
+                        Gender.Male, Role.ADMIN),
+                new User("renter", "test",
+                        "renter@test.com",
+                        passwordEncoder.bCryptPasswordEncoder()
+                                .encode("renter123"),
+                        Gender.Male, Role.RENTER),
+                new User("client", "test",
+                        "client@test.com",
+                        passwordEncoder.bCryptPasswordEncoder()
+                                .encode("client123"),
+                        Gender.Male, Role.CLIENT)
+        );
+        users.forEach(user -> user.setEnabled(Boolean.TRUE));
 
+        userRepository.saveAll(users);
     }
 }
