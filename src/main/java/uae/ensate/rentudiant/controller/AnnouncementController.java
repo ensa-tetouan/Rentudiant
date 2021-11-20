@@ -2,6 +2,7 @@ package uae.ensate.rentudiant.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import uae.ensate.rentudiant.dto.AnnouncementDto;
 import uae.ensate.rentudiant.dto.RuleDto;
@@ -18,6 +19,7 @@ public class AnnouncementController {
 
     public final AnnouncementService announcementService;
 
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'RENTER')")
     @PostMapping(path = "add")
     public ResponseEntity<Long> addAnnouncement(@RequestBody AnnouncementDto announcementDto) {
         Announcement announcement = announcementService.add(announcementDto);
@@ -29,11 +31,13 @@ public class AnnouncementController {
         return ResponseEntity.ok(announcementService.findAll());
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'RENTER')")
     @DeleteMapping("delete")
     public void deleteAnnouncement(@RequestParam("id") Long id) {
         announcementService.delete(id);
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'RENTER')")
     @PutMapping("update")
     public void updateAnnouncement(@RequestParam("id") Long id,
                                    @RequestBody AnnouncementDto announcementDto) {

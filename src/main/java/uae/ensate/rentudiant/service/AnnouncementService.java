@@ -6,7 +6,6 @@ import uae.ensate.rentudiant.dto.AnnouncementDto;
 import uae.ensate.rentudiant.dto.RuleDto;
 import uae.ensate.rentudiant.mapper.Mapper;
 import uae.ensate.rentudiant.model.Announcement;
-import uae.ensate.rentudiant.model.House;
 import uae.ensate.rentudiant.repository.AnnouncementRepository;
 
 import java.util.List;
@@ -21,7 +20,7 @@ public class AnnouncementService {
     private final DbUpdateService dbUpdateService;
 
     public Announcement add(AnnouncementDto announcementDto) {
-        dbUpdateService.dbUpdated();
+        //dbUpdateService.dbUpdated();
         return announcementRepository.save(Mapper.mapToAnnouncement(
                 announcementDto,
                 houseService.findById(announcementDto.idHouse())));

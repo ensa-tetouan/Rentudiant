@@ -7,7 +7,7 @@ Content-Type: application/json
   "email" : "silverest2122@gmail.com",
   "password": "pwordlfkasds",
   "gender": "Male",
-  "role": "ADMIN"
+  "role": "RENTER"
 }
 
 > {%
@@ -76,6 +76,7 @@ Content-Type: application/json
 
 ###
 POST http://localhost:8080/api/v1/announcement/add
+Authorization: Bearer {{auth_token}}
 Content-Type: application/json
 
 {
@@ -91,6 +92,43 @@ Authorization: Bearer {{auth_token}}
 ###
 GET http://localhost:8080/api/v1/pictures?house_id=1
 Authorization: Bearer {{auth_token}}
+
+###
+POST http://localhost:8080/api/v1/register
+Content-Type: application/json
+
+{
+  "firstName": "taha2",
+  "lastName": "metougu2i",
+  "email" : "silverest22@gmail.com",
+  "password": "pwordlfs",
+  "gender": "Male",
+  "role": "CLIENT"
+}
+
+> {%
+    client.global.set("confirmation_token2", response.body);
+%}
+
+###
+GET http://localhost:8080/api/v1/register/confirm?token={{confirmation_token2}}
+
+### Authenticate obviously
+POST http://localhost:8080/api/v1/authenticate
+Content-Type: application/json
+
+{
+  "email" : "silverest22@gmail.com",
+  "password": "pwordlfs"
+}
+
+> {%
+    client.global.set("auth_token_client", response.body);
+%}
+
+###
+DELETE http://localhost:8080/api/v1/announcement/delete?id=1
+Authorization: Bearer {{auth_token_client}}
 
 ###
 DELETE http://localhost:8080/api/v1/announcement/delete?id=1
