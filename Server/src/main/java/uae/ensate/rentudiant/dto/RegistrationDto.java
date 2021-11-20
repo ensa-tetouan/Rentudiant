@@ -5,6 +5,6 @@ import lombok.ToString;
 import uae.ensate.rentudiant.enums.Gender;
 import uae.ensate.rentudiant.enums.Role;
 
-public record RegistrationDto(String firstName, String lastName, String username,
+public record RegistrationDto(String firstName, String lastName,
                               String email, String password,
                               Gender gender, Role role) {}

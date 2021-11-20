@@ -1,6 +1,7 @@
 package uae.ensate.rentudiant.controller;
 
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +17,8 @@ public class AddressController {
     private final AddressService addressService;
 
     @PostMapping("add")
-    public void addAddress(@RequestBody AddressDto address) {
-        addressService.save(address);
+    public ResponseEntity<Long> addAddress(@RequestBody AddressDto address) {
+        return ResponseEntity
+                .ok(addressService.save(address).getId());
     }
 }

@@ -1,0 +1,15 @@
+@page "/Admin"
+<MudTabs Outlined="true" Position="Position.Bottom" Rounded="true" Border="true"
+    ApplyEffectsToContainer="true">
+    <MudTabPanel Text="Dashboard">
+        <Overview Reservations="Reservations" Announcements="Announcements"/>
+    </MudTabPanel>
+    <MudTabPanel Text="Add Announcement">
+        <AnnoucementForm/>
+    </MudTabPanel>
+</MudTabs>
+
+@code {
+    [Parameter] public AnnouncementT[] Announcements { get; set; } = Enumerable.Range(0,10).Select(i => TypeEnhancements.getRandomeAnn()).ToArray();
+    [Parameter] public ReservationT[] Reservations { get; set; } = Enumerable.Range(0,10).Select(i => TypeEnhancements.getRandomRes()).ToArray();
+}

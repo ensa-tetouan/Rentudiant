@@ -1,0 +1,15 @@
+@page "/Client"
+<MudTabs Outlined="true" Position="Position.Bottom" Rounded="true" Border="true"
+    ApplyEffectsToContainer="true">
+    <MudTabPanel Text="Store">
+        <Showcase Announcemets="Announcements"/>
+    </MudTabPanel>
+    <MudTabPanel Text="Add Reservation">
+        <Checkout/>
+    </MudTabPanel>
+</MudTabs>
+
+@code {
+    [Parameter] public AnnouncementT[] Announcements { get; set; } = Enumerable.Range(0,10).Select(i => TypeEnhancements.getRandomeAnn()).ToArray();
+    [Parameter] public ReservationT[] Reservations { get; set; } = Enumerable.Range(0,10).Select(i => TypeEnhancements.getRandomRes()).ToArray();
+}

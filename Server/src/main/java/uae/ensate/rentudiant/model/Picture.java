@@ -17,9 +17,10 @@ public class Picture {
     private Long id;
 
     @Column(nullable = false)
-    private String path;
+    @Lob
+    private byte[] data;
 
-    public Picture(String path) {
-        this.path = path;
+    public Picture(byte[] data) {
+        this.data = data;
     }
 }

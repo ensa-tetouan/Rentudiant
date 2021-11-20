@@ -12,13 +12,15 @@ import uae.ensate.rentudiant.repository.AddressRepository;
 public class AddressService {
 
     private final AddressRepository addressRepository;
+    private final DbUpdateService dbUpdateService;
 
     public Address findById(Long id) {
         return addressRepository.findById(id)
                 .orElseThrow(() -> new IllegalStateException("Address not found"));
     }
 
-    public void save(AddressDto addressDto) {
-        addressRepository.save(Mapper.mapToAddress(addressDto));
+    public Address save(AddressDto addressDto) {
+        dbUpdateService.dbUpdated();
+        return addressRepository.save(Mapper.mapToAddress(addressDto));
     }
 }

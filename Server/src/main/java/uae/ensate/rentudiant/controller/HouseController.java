@@ -1,6 +1,7 @@
 package uae.ensate.rentudiant.controller;
 
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uae.ensate.rentudiant.dto.HouseDto;
 import uae.ensate.rentudiant.model.House;
@@ -17,13 +18,15 @@ public class HouseController {
     private HouseService houseService;
 
     @PostMapping("add")
-    public void addHouse(@RequestBody HouseDto house) {
-       houseService.add(house);
+    public ResponseEntity<Long> addHouse(@RequestBody HouseDto house) {
+        House h = houseService.add(house);
+        return ResponseEntity.ok(h.getId());
     }
 
     @GetMapping
-    public List<House> getAll() {
-        return houseService.fetchAll();
+    public ResponseEntity<List<House>> getAll() {
+        return ResponseEntity
+                .ok(houseService.fetchAll());
     }
 
 

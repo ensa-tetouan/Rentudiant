@@ -1,0 +1,48 @@
+@page "/Check/{id}"
+
+<MudContainer MaxWidth="MaxWidth.Large">
+    <MudText Typo="Typo.h3" Align="Align.Center" GutterBottom="true">Checkout</MudText>
+    <MudGrid Class="mt-16">
+        <MudItem xs="7">
+            <MudText Typo="Typo.h5" GutterBottom="true">Extra Data</MudText>
+            <MudGrid>
+                <MudItem xs="3">
+                    <Block  Title="BedRooms Count :" Count="tempo?.house?.bedroomsC ?? 0"/>
+                </MudItem>
+                <MudItem xs="3">
+                    <Block  Title="BathRooms Count :" Count="tempo?.house?.bathroomsC ?? 0"/>
+                </MudItem>
+                <MudItem xs="3">
+                    <Block  Title="Rooms Count :" Count="tempo?.house?.roomC ?? 0"/>
+                </MudItem>
+                <MudItem xs="3">
+                    <Block  Title="Surface Count :" Message="@((tempo?.house?.surface ?? 0.0).ToString())"/>
+                </MudItem>
+                <MudItem xs="12">
+                    <MudPaper Style="height : 34vh; overflow-y : scroll;">
+                        <MudTable Items="@tempo?.house?.rules" Hover="true" Breakpoint="Breakpoint.Sm" Loading="false" LoadingProgressColor="Color.Info">
+                            <HeaderContent>
+                                <MudTh>Rule</MudTh>
+                                <MudTh>Penalty</MudTh>
+                            </HeaderContent>
+                            <RowTemplate>
+                                <MudTd DataLabel="RuleBody">@context.ruleBody</MudTd>
+                                <MudTd DataLabel="Penalty">@context.penalty</MudTd>
+                            </RowTemplate>
+                        </MudTable>
+                    </MudPaper>
+                </MudItem>
+            </MudGrid>
+        </MudItem>
+        <MudItem xs="5">
+            <MudText Typo="Typo.h5" GutterBottom="true">Card</MudText>
+            <MudPaper Class="d-flex flex-column" Outlined="true">
+                <Announcement Data="tempo"/>
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
+</MudContainer>
+@code {
+    [Parameter] public string id { get; set; }
+    public AnnouncementT tempo = TypeEnhancements.getRandomeAnn();
+}

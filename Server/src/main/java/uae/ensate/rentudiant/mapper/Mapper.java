@@ -3,6 +3,7 @@ package uae.ensate.rentudiant.mapper;
 import lombok.AllArgsConstructor;
 import uae.ensate.rentudiant.dto.*;
 import uae.ensate.rentudiant.model.*;
+import uae.ensate.rentudiant.util.ByteDigester;
 
 import java.util.List;
 import java.util.Set;
@@ -67,7 +68,24 @@ public class Mapper {
 
     public static Picture mapToPicture(PictureDto pictureDto) {
         return new Picture(
-                pictureDto.path()
+                ByteDigester.decode(pictureDto.data())
+        );
+    }
+
+    public static PictureDto mapToPictureDto(Picture picture) {
+        return new PictureDto(
+                ByteDigester.encode(picture.getData())
+        );
+    }
+
+    public static User mapToUser(RegistrationDto registrationDto) {
+        return new User (
+                registrationDto.firstName(),
+                registrationDto.lastName(),
+                registrationDto.email(),
+                registrationDto.password(),
+                registrationDto.gender(),
+                registrationDto.role()
         );
     }
 }

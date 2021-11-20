@@ -1,0 +1,14 @@
+<MudGrid>
+    <MudItem xs="12">
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField  @bind-Value="Search" Label="Search" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Filled.Search" AdornmentColor="Color.Secondary" />
+        </MudItem>
+    </MudItem>
+    <MudItem xs="12">
+        <Showcase/>
+    </MudItem>
+</MudGrid>
+
+@code {
+    public string Search { get; set;}
+}

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import uae.ensate.rentudiant.dto.RegistrationDto;
 import uae.ensate.rentudiant.mail.EmailSender;
+import uae.ensate.rentudiant.mapper.Mapper;
 import uae.ensate.rentudiant.model.ConfirmationToken;
 import uae.ensate.rentudiant.model.User;
 
@@ -24,16 +25,7 @@ public class RegistrationService {
         if (!isValidEmail) {
             throw new IllegalStateException("email not valid");
         }
-        String token =  userService.signUpUser(
-                new User (
-                        request.firstName(),
-                        request.lastName(),
-                        request.email(),
-                        request.password(),
-                        request.gender(),
-                        request.role()
-                )
-        );
+        String token =  userService.signUpUser(Mapper.mapToUser(request));
 
         String link = "http://localhost:8080/api/v1/register/confirm?token=" + token;
 

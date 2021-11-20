@@ -1,0 +1,39 @@
+<MudCard>
+    <MudCardHeader>
+        <CardHeaderAvatar>
+            <MudAvatar Color="Color.Secondary">@Index</MudAvatar>
+        </CardHeaderAvatar>
+        <CardHeaderContent>
+            <MudText Typo="Typo.body1">@Data?.price ?? 0</MudText>
+            <MudText Typo="Typo.body2">@Data?.house?.address?.toString</MudText>
+        </CardHeaderContent>
+        <CardHeaderActions>
+            <MudIconButton Icon="@Icons.Material.Filled.Settings" Color="Color.Default" />
+        </CardHeaderActions>
+    </MudCardHeader>
+    @if((Data?.house?.pictures?.Length ?? 0) > 0){
+        <MudCardMedia Image="@Data?.house?.pictures[0].data" Height="250" />
+    } else {
+        <MudCardMedia Image="@Icons.Material.Filled.Photo" Height="250" />
+    }
+    <MudCardContent>
+        <MudText Typo="Typo.body2">@Data?.house?.description</MudText>
+    </MudCardContent>
+    <MudCardActions>
+        <MudIconButton Icon="@Icons.Material.Filled.Share" Color="Color.Default" />
+        <div class="d-flex flex-column align-center">
+            <MudRating @bind-SelectedValue="selectedVal" HoveredValueChanged="HandleHoveredValueChanged" />
+        </div>
+
+    </MudCardActions>
+</MudCard>
+
+@code {
+    [Parameter] public int Index {get; set;} = 0;
+    [Parameter] public AnnouncementT Data {get; set;} = null;
+    public ReviewT rate {get; set;} = null;
+    private int selectedVal = 0;
+    private int? activeVal;
+
+    private void HandleHoveredValueChanged(int? val) => activeVal = val;
+}
