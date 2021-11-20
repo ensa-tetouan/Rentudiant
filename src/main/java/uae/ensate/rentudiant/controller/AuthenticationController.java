@@ -15,7 +15,7 @@ import uae.ensate.rentudiant.service.UserService;
 @RequestMapping("/api/v1/authenticate")
 @AllArgsConstructor
 @CrossOrigin
-public class AutheticationController {
+public class AuthenticationController {
 
     private AuthenticationManager authenticationManager;
     private UserService userService;
@@ -32,8 +32,9 @@ public class AutheticationController {
             throw new Exception("Incorrect username or password", e);
         }
 
-        final User user = userService.loadUserByUsername(authRequest.email());
+        User user = userService.loadUserByUsername(authRequest.email());
 
         return ResponseEntity.ok(jwtService.generateToken(user));
     }
 }
+

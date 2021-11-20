@@ -4,10 +4,10 @@ Content-Type: application/json
 {
   "firstName": "taha",
   "lastName": "metougui",
-  "email" : "silverest212@gmail.com",
-  "password": "pwordlfkas",
+  "email" : "silverest2122@gmail.com",
+  "password": "pwordlfkasds",
   "gender": "Male",
-  "role": "Admin"
+  "role": "ADMIN"
 }
 
 > {%
@@ -22,8 +22,8 @@ POST http://localhost:8080/api/v1/authenticate
 Content-Type: application/json
 
 {
-  "email" : "silverest212@gmail.com",
-  "password" : "pwordlfkas"
+  "email" : "silverest2122@gmail.com",
+  "password" : "pwordlfkasds"
 }
 
 > {%
@@ -32,6 +32,7 @@ Content-Type: application/json
 
 ### Get announcements
 GET http://localhost:8080/api/v1/announcement
+Authorization: Bearer {{auth_token}}
 
 ###
 POST http://localhost:8080/api/v1/address/add

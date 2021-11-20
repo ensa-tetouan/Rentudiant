@@ -14,7 +14,6 @@ import java.util.Set;
 @AllArgsConstructor
 @RestController
 @RequestMapping(path = "/api/v1/announcement")
-@CrossOrigin
 public class AnnouncementController {
 
     public final AnnouncementService announcementService;

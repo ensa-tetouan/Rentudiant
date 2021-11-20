@@ -5,14 +5,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.Hibernate;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import uae.ensate.rentudiant.enums.Gender;
 import uae.ensate.rentudiant.enums.Role;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Objects;
 
 @Getter
@@ -65,8 +64,9 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority auth = new SimpleGrantedAuthority(role.name());
-        return Collections.singleton(auth);
+        return AuthorityUtils
+                .commaSeparatedStringToAuthorityList(role.toString());
+        //return Collections.singleton(new SimpleGrantedAuthority(role.toString()));
     }
 
     @Override

@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -17,6 +18,7 @@ import uae.ensate.rentudiant.service.UserService;
 @Configuration
 @AllArgsConstructor
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String[] AUTH_WHITELIST = {
             "/swagger-resources/**",
@@ -35,13 +37,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.formLogin().disable();
         http
-                .cors().and().csrf().disable()
+                .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/api/v*/authenticate").permitAll()
                 .antMatchers("/api/v*/register/**").permitAll()
-                .antMatchers("/api/v*/announcement/**").hasAnyAuthority("ADMIN", "RENTER")
-                .antMatchers("/api/v*/address/**").permitAll()
+                .antMatchers("/api/v*/announcement/**").hasAnyAuthority("ADMIN")
+                .antMatchers("/api/v*/address/**").hasAnyAuthority("ADMIN")
                 .antMatchers("/api/v*/pictures/**").permitAll()
                 .antMatchers("/api/v*/house/**").permitAll()
                 .antMatchers("/swagger-ui/**").permitAll()

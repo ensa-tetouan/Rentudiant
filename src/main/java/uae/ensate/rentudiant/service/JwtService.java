@@ -3,12 +3,10 @@ package uae.ensate.rentudiant.service;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import uae.ensate.rentudiant.model.User;
 
 import java.util.Date;
-import java.util.Map;
 import java.util.function.Function;
 
 @Service
@@ -39,22 +37,19 @@ public class JwtService {
     }
 
     public String generateToken(User user) {
-        return createToken(
-                Map.of("role", user.getRole()),
-                user.getUsername());
+        return createToken(user.getEmail());
     }
 
-    private String createToken (Map<String, Object> claims, String subject) {
+    private String createToken (String subject) {
         return Jwts.builder()
-                .setClaims(claims)
                 .setSubject(subject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
                 .signWith(SignatureAlgorithm.HS256, jwtSecret).compact();
     }
 
-    public Boolean validateToken (String token, UserDetails userDetails) {
-        return extractUsername(token).equals(userDetails.getUsername())
+    public Boolean validateToken (String token, User user) {
+        return extractUsername(token).equals(user.getUsername())
                 && !isTokenExpired(token);
     }
 }
