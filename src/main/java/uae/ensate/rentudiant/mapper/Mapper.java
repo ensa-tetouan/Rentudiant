@@ -25,11 +25,20 @@ public class Mapper {
             );
     }
 
-    public static Review mapToReview(ReviewDto reviewDto, House house) {
+    public static Review mapToReview(ReviewDto reviewDto, User user, House house) {
         return new Review(
                 house,
+                user,
+                reviewDto.body(),
                 reviewDto.rating()
         );
+    }
+
+    public static ReviewResponseDto mapToReviewResponse(Review review) {
+        return new ReviewResponseDto(
+                review.getUser().getFirstName(),
+                review.getUser().getLastName(),
+                review.getBody(), review.getRating());
     }
 
     public static Rule mapToRule(RuleDto ruleDto) {

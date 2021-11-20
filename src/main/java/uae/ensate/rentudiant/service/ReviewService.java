@@ -6,6 +6,7 @@ import uae.ensate.rentudiant.dto.ReviewDto;
 import uae.ensate.rentudiant.mapper.Mapper;
 import uae.ensate.rentudiant.model.House;
 import uae.ensate.rentudiant.model.Review;
+import uae.ensate.rentudiant.model.User;
 import uae.ensate.rentudiant.repository.ReviewRepository;
 
 import java.util.List;
@@ -16,6 +17,7 @@ public class ReviewService {
 
     private final ReviewRepository reviewRepository;
     private final HouseService houseService;
+    private final UserService userService;
     private final DbUpdateService dbUpdateService;
 
     public List<Review> fetchReviewsByHouse(Long houseId) {
@@ -24,29 +26,41 @@ public class ReviewService {
     }
 
     public Review save(ReviewDto reviewDto) {
-      Review review = Mapper.mapToReview(reviewDto, houseService.findById(reviewDto.idHouse()));
+      Review review = Mapper.mapToReview(
+              reviewDto,
+              userService.findById(reviewDto.userId()),
+              houseService.findById(reviewDto.idHouse()));
       dbUpdateService.dbUpdated();
 
       return reviewRepository.save(review);
     }
 
-    public void delete(Long id) {
+    public void delete(Long id, Long userId) {
         dbUpdateService.dbUpdated();
-        reviewRepository.deleteById(id);
+        User user = userService.findById(id);
+        if (findById(id).getUser().equals(user))
+            reviewRepository.deleteById(id);
+
     }
 
     public void update(Long id, ReviewDto reviewDto) {
         Review review = findById(id);
-        Review modifiedReview = Mapper
-                .mapToReview(reviewDto,
-                        houseService.findById(reviewDto.idHouse())
-                );
+        User user = userService.findById(reviewDto.userId());
 
-        review.setHouse(modifiedReview.getHouse());
-        review.setRating(modifiedReview.getRating());
+        if (review.getUser()
+                .equals(user)) {
+            Review modifiedReview = Mapper
+                    .mapToReview(reviewDto,
+                            user,
+                            houseService.findById(reviewDto.idHouse())
+                    );
 
-        dbUpdateService.dbUpdated();
-        reviewRepository.save(review);
+            review.setHouse(modifiedReview.getHouse());
+            review.setRating(modifiedReview.getRating());
+
+            dbUpdateService.dbUpdated();
+            reviewRepository.save(review);
+        }
     }
 
     public Review findById(Long id) {

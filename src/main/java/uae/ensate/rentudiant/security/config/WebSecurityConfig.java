@@ -46,6 +46,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/v*/pictures/**").permitAll()
                 .antMatchers("/api/v*/house/**").hasAnyAuthority("ADMIN", "RENTER")
                 .antMatchers("/api/v*/user/**").hasAnyAuthority("ADMIN", "RENTER")
+                .antMatchers("/api/v*/review/**").permitAll()
                 .antMatchers("/swagger-ui/**").permitAll()
                 .anyRequest().authenticated()
                 .and().sessionManagement()
