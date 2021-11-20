@@ -6,7 +6,6 @@ import lombok.Setter;
 import uae.ensate.rentudiant.enums.AnnouncementType;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Getter
 @Setter

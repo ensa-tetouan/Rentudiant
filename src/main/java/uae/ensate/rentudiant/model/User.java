@@ -66,7 +66,6 @@ public class User implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return AuthorityUtils
                 .commaSeparatedStringToAuthorityList(role.toString());
-        //return Collections.singleton(new SimpleGrantedAuthority(role.toString()));
     }
 
     @Override

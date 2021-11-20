@@ -3,8 +3,6 @@ package uae.ensate.rentudiant.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.Hibernate;
-import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import javax.validation.constraints.DecimalMax;
@@ -32,4 +30,5 @@ public class Review {
         this.house = house;
         this.rating = rating;
     }
+
 }
