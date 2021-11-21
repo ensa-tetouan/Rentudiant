@@ -1,4 +1,4 @@
-@page "/res"
+@inject IDbLayer db
 <MudText Typo="Typo.h3" Align="Align.Center" GutterBottom="true">Reservations</MudText>
 <MudTabs Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary">
     <MudTabPanel Text="Reservations">
@@ -24,8 +24,8 @@
             </PagerContent>
             <FooterContent>
                 <MudTd colspan="2">Select All</MudTd>
-                <MudTd colspan="2"><MudButton>Edit</MudButton></MudTd>
-                <MudTd colspan="2"><MudButton>Delete</MudButton></MudTd>
+                <MudTd colspan="2"><MudButton Enabled="false">Edit</MudButton></MudTd>
+                <MudTd colspan="2"><MudButton OnClick="DeleteReservation">Delete</MudButton></MudTd>
             </FooterContent>
         </MudTable>
     </MudTabPanel>
@@ -35,9 +35,12 @@
 </MudTabs>
 
 @code {
-    [Parameter] public IEnumerable<ReservationT> Reservations { get; set; } = Enumerable.Range(0,12).Select(_ => TypeEnhancements.getRandomRes());
-    [Parameter] public IEnumerable<AnnouncementT> Announcements { get; set; } = Enumerable.Range(0,12).Select(_ => TypeEnhancements.getRandomeAnn());
+    [Parameter] public IEnumerable<ReservationT> Reservations { get; set; } 
+    [Parameter] public IEnumerable<AnnouncementT> Announcements { get; set; }
     private HashSet<ReservationT> selectedItems = new HashSet<ReservationT>();
-
-
+    protected void DeleteReservation()
+    {
+        selectedItems.ToList().ForEach(x => db.Remove(x));
+        selectedItems.Clear();
+    }
 }

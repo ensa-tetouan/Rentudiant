@@ -1,14 +1,47 @@
+@inject IDbLayer Db
 <MudGrid>
     <MudItem xs="12">
-        <MudItem xs="12" sm="6" md="4">
-            <MudTextField  @bind-Value="Search" Label="Search" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Filled.Search" AdornmentColor="Color.Secondary" />
-        </MudItem>
+        <MudGrid>
+            <MudItem xs="12" sm="6" md="4">
+                <MudTextField  @bind-Value="Search" Label="Search" Variant="Variant.Outlined" Adornment="Adornment.End" 
+                                AdornmentIcon="@Icons.Filled.Search" AdornmentColor="Color.Secondary" 
+                                DebounceInterval="100" OnDebounceIntervalElapsed="HandleIntervalElapsed" />
+            </MudItem>
+            <MudItem xs="12" sm="6" md="4">
+                <MudSlider T="double" Value="minV" Min="-1" Max="maxV" Step="0.05" Color="Color.Error" ValueChanged="FilterMin">Min Value: $@minV.ToString("F2")</MudSlider>
+            </MudItem>
+            <MudItem xs="12" sm="6" md="4">
+                <MudSlider T="double" Value="maxV" Min="minV" Max="80" Color="Color.Info" ValueChanged="FilterMax">Max Value: $@maxV.ToString()</MudSlider>
+            </MudItem>
+        </MudGrid>
     </MudItem>
     <MudItem xs="12">
-        <Showcase/>
+        <Showcase Announcemets="Items"/>
     </MudItem>
 </MudGrid>
 
 @code {
     public string Search { get; set;}
+    public double minV = 0;
+    public double maxV = 100;
+    public IEnumerable<AnnouncementT> Items { get; set;}
+    protected override void OnInitialized()
+    {
+        Items = Db.GetAAll();
+        maxV = Items.Select(i => i.price).Max();
+        minV = Items.Select(i => i.price).Min();
+    }
+    void HandleIntervalElapsed(string debouncedText)
+    {
+        Search = debouncedText;
+        Items = Db.GetAAll().Where(a => a.house.address.toString.Contains(debouncedText)).ToList();
+        StateHasChanged();
+    }
+    void FilterMax(double max) => Filter(max, minV);
+    void FilterMin(double min) => Filter(maxV, min);
+    void Filter(double max,double min){
+        maxV = max; minV = min;
+        Items = Db.GetAAll().Where(a => a.price >= minV && a.price <= maxV).ToList();
+        StateHasChanged();
+    }
 }

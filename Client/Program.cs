@@ -8,6 +8,8 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using MudBlazor.Services;
+using Client2.Services;
+using Client2.Models;
 
 namespace Client2
 {
@@ -19,7 +21,10 @@ namespace Client2
             builder.RootComponents.Add<App>("#app");
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-
+            builder.Services.AddSingleton<IDbLayer, DbService>();
+            builder.Services.AddSingleton<IAuthentificator, Authenficator>();
+            builder.Services.AddSingleton<ISnapshot, Snapshot>();
+            builder.Services.AddSingleton<ILocalStorage, LocalStorage >();
             builder.Services.AddMudServices();
 
             await builder.Build().RunAsync();

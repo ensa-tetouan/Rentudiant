@@ -10,6 +10,6 @@ namespace Client2.Models
         public DateTime createdAt {get; set;}
         public DateTime startPeriod {get; set;}
         public DateTime endPeriod {get; set;}
-        public int houseId {get; set;}
+        public int announcementId {get; set;}
     }
 }

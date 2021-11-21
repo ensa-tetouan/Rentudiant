@@ -1,3 +1,4 @@
+@inject IDbLayer Database
 <MudForm Model="@Announcement" @ref="@form">
     <MudGrid>
         <MudItem xs="12" sm="12" md="4">
@@ -125,7 +126,23 @@
 
         if (form.IsValid)
         {
+            Announcement.house.pictures = pics.ToArray();
+            Database.Add(Announcement);
             Snackbar.Add("Submited!");
+            Announcement = new AnnouncementT {
+                id = (new Random()).Next(),
+                price = -1,
+                house = new HouseT {
+                    address = new AddressT {
+                    },
+                    rules = Enumerable.Range(0,7).Select(_ => new RuleT {
+                                                                ruleBody = "",
+                                                                penalty = 0
+                                                        }).ToArray()
+                }
+            };
+            pics.Clear();
+            StateHasChanged();
         }
     }
     

@@ -13,6 +13,6 @@
 </MudContainer>
 
 @code {
-    [Parameter] public AnnouncementT[] Announcements { get; set; } = Enumerable.Range(0,10).Select(i => TypeEnhancements.getRandomeAnn()).ToArray();
-    [Parameter] public ReservationT[] Reservations { get; set; } = Enumerable.Range(0,10).Select(i => TypeEnhancements.getRandomRes()).ToArray();
+    [Parameter] public IEnumerable<AnnouncementT> Announcements { get; set; } 
+    [Parameter] public IEnumerable<ReservationT> Reservations { get; set; } 
 }
