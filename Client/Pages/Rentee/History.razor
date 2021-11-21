@@ -1,6 +1,6 @@
 @inject IDbLayer db
 <MudText Typo="Typo.h3" Align="Align.Center" GutterBottom="true">Reservations</MudText>
-<MudTabs Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary">
+<MudTabs Elevation="4" Rounded="true" Style="min-width : 80vw;" Centered="true" Color="@Color.Primary">
     <MudTabPanel Text="Reservations">
         <MudTable Items="@Reservations" MultiSelection="true" @bind-SelectedItems="selectedItems">
             <HeaderContent>

@@ -59,6 +59,7 @@ namespace Client2.Services
             _announcements = Enumerable.Range(1, 10).Select(i => TypeEnhancements.getRandomeAnn()).ToList();
             _reservations = Enumerable.Range(1, 10).Select(i => TypeEnhancements.getRandomRes()).ToList();
             _users = Enumerable.Range(1, 10).Select(i => TypeEnhancements.getRandomePer()).ToList();
+            _reviews = Enumerable.Range(1, 10).Select(i => TypeEnhancements.getRandomRev()).ToList();
             LoadFromSnapshotAsync();
             foreach (var user in _users)
             {
@@ -72,10 +73,17 @@ namespace Client2.Services
                 _camera.TakeSnapshotAsync(Snap);
             }
             public AnnouncementT GetA(int id) {
-                return _announcements.FirstOrDefault(a => a.id == id);
+                var a = _announcements.FirstOrDefault(a => a.id == id);
+                System.Console.WriteLine(a);
+                var rates = GetSAll().Where(r => r.announcementID == id).Select(r => r.rating).Average();
+                //System.Console.WriteLine(rates);
+                return a;
             }
             public IEnumerable<AnnouncementT> GetAAll() {
-                return _announcements;
+                return _announcements.Select(a => {
+                    a.AvgRating = (int)(GetSAll().Where(r => r.announcementID == a.id).Select(r => r.rating).Average());
+                    return a;
+                }).ToList();
             }
             public void Remove(AnnouncementT announcement) {
                 _announcements = _announcements.Where(a => a.id != announcement.id).ToList();

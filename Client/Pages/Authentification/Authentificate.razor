@@ -49,6 +49,7 @@
         {
             if(value == "Logout"){
                 await auth.Logout();
+                Navigator.NavigateTo("/Auth");
             }
         }
         await base.SetParametersAsync(parameters);

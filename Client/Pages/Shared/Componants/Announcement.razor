@@ -24,7 +24,7 @@
     <MudCardActions>
         <MudIconButton Icon="@Icons.Material.Filled.Share" Color="Color.Default" OnClick="ReserveClick" />
         <div class="d-flex flex-column align-center">
-            <MudRating @bind-SelectedValue="Data.AvgRating" HoveredValueChanged="HandleHoveredValueChanged" />
+            <MudRating T="int" SelectedValue="@Data.AvgRating" SelectedValueChanged="HandleRate" HoveredValueChanged="HandleHoveredValueChanged" />
         </div>
 
     </MudCardActions>
@@ -32,10 +32,26 @@
 
 @code {
     [Parameter] public int Index {get; set;} = 0;
+    private State role = State.Rentee;
     [Parameter] public AnnouncementT Data {get; set;} = null;
     private int? activeVal;
-    private string Link(int? id) => $"/Check/{id}";
+    private string Link(int? id) => role == State.Rentee ? $"/Check/{id}" : $"/Form/{id}";
     private void HandleHoveredValueChanged(int? val) => activeVal = val;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var client = await storage.FetchAsync<UserT>("user");
+        if(client is not null)
+            role = client.role;
+    }
+    private async Task HandleRate(int rate){
+        Data.AvgRating = rate;
+        db.Add(new ReviewT {
+            id = (new Random()).Next(),
+            announcementID = Data.id,
+            rating = rate
+        });
+    }
     private async Task ReserveClick(){
         var rnd = new Random();
         var client = await storage.FetchAsync<UserT>("user");

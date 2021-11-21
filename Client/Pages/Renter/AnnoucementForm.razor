@@ -1,3 +1,4 @@
+@page "/Form/{id:int}"
 @inject IDbLayer Database
 <MudForm Model="@Announcement" @ref="@form">
     <MudGrid>
@@ -106,6 +107,7 @@
 </MudForm>
 @code {
 	[Inject] ISnackbar Snackbar { get; set; }
+	[Parameter] public int id{ get; set; } = -1;
 
     MudForm form;
     public AnnouncementT Announcement { get; set; } = new AnnouncementT {
@@ -120,6 +122,17 @@
         }
     };
     private List<PictureT> pics = new List<PictureT>();
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        if(id != -1)
+        {
+            System.Console.WriteLine(id);
+            Announcement = Database.GetA(id);
+            pics = Announcement.house.pictures.ToList();
+            StateHasChanged();
+        }
+    }
     private async Task Submit()
     {
         await form.Validate();
@@ -127,7 +140,14 @@
         if (form.IsValid)
         {
             Announcement.house.pictures = pics.ToArray();
-            Database.Add(Announcement);
+            if(id != -1)
+            {
+                Database.Update(Announcement);
+            }
+            else
+            {
+                Database.Add(Announcement);
+            }
             Snackbar.Add("Submited!");
             Announcement = new AnnouncementT {
                 id = (new Random()).Next(),

@@ -31,6 +31,13 @@ namespace Client2.Extensions
                 AvgRating = (int)Enumerable.Range(1, 5).Select(i => rnd.Next(1, 10)).Average()
             };
         }
+        public static ReviewT getRandomRev(){
+            return new ReviewT {
+                id = rnd.Next(0,10),
+                rating = rnd.Next(0,6),
+                announcementID = rnd.Next(1,10)
+            };
+        }
         public static HouseT getRandomeHou(){
             return new HouseT {
                 id = rnd.Next(1, 10),
