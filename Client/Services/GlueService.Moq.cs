@@ -74,14 +74,20 @@ namespace Client2.Services
             }
             public AnnouncementT GetA(int id) {
                 var a = _announcements.FirstOrDefault(a => a.id == id);
-                System.Console.WriteLine(a);
-                var rates = GetSAll().Where(r => r.announcementID == id).Select(r => r.rating).Average();
-                //System.Console.WriteLine(rates);
+                try {
+                    a.AvgRating = (int)(GetSAll().Where(r => r.announcementID == a.id).Select(r => r.rating).Average());
+                } catch(Exception){
+                    a.AvgRating = 0;
+                }
                 return a;
             }
             public IEnumerable<AnnouncementT> GetAAll() {
                 return _announcements.Select(a => {
-                    a.AvgRating = (int)(GetSAll().Where(r => r.announcementID == a.id).Select(r => r.rating).Average());
+                    try {
+                        a.AvgRating = (int)(GetSAll().Where(r => r.announcementID == a.id).Select(r => r.rating).Average());
+                    } catch(Exception){
+                        a.AvgRating = 0;
+                    }
                     return a;
                 }).ToList();
             }
