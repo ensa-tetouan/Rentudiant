@@ -16,4 +16,4 @@ security 101.
 
 check [this](./Server/test.http) for examples.
 
-smpt local server used: [maildev](https://github.com/maildev/maildev)
+smtp local server used: [maildev](https://github.com/maildev/maildev)
